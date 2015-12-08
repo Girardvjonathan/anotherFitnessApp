@@ -43,3 +43,6 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+class activity(models):
+    time = models.TimeField()
