@@ -32,6 +32,9 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
     username = models.CharField(max_length=50, unique=True)
     date_joined = models.DateTimeField('date joined', default=timezone.now)
     weight = models.FloatField(blank=True, null=True)
+    height = models.FloatField(blank=True, null=True)
+    Activity = models.ForeignKey(Activity, blank=True, null=True)
+
     objects = FitUserManager()
 
     USERNAME_FIELD = 'username'
@@ -44,5 +47,13 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
-class activity(models):
-    time = models.TimeField()
+
+ACTIVITY_CHOICE = ['cardio', 'weight']
+
+
+class Activity(models):
+    # type = models.
+    date = models.DateTimeField()
+    duration = models.TimeField()
+    distance = models.FloatField(blank=True, null=True)
+    repetition = models.IntegerField(blank=True, null=True)
