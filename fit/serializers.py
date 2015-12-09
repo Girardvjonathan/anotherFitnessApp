@@ -6,7 +6,7 @@ from fit.models import *
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('url', 'username', 'email', 'weight', 'height', 'activity')
+        fields = ('url', 'username', 'email', 'weight', 'height',)
 
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):

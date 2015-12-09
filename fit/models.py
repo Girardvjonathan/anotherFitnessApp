@@ -27,6 +27,17 @@ class FitUserManager(BaseUserManager):
                                  **extra_fields)
 
 
+ACTIVITY_CHOICE = ['cardio', 'weight']
+
+
+class Activity(models.Model):
+    # type = models.
+    date = models.DateTimeField()
+    duration = models.TimeField()
+    distance = models.FloatField(blank=True, null=True)
+    repetition = models.IntegerField(blank=True, null=True)
+
+
 class UserProfile(PermissionsMixin, AbstractBaseUser):
     email = models.EmailField('email address', unique=True)
     username = models.CharField(max_length=50, unique=True)
@@ -48,12 +59,4 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
         verbose_name_plural = 'users'
 
 
-ACTIVITY_CHOICE = ['cardio', 'weight']
 
-
-class Activity(models):
-    # type = models.
-    date = models.DateTimeField()
-    duration = models.TimeField()
-    distance = models.FloatField(blank=True, null=True)
-    repetition = models.IntegerField(blank=True, null=True)
