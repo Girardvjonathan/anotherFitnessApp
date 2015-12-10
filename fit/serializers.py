@@ -10,6 +10,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.ReadOnlyField(source='user_set.username')
+
     class Meta:
         model = Activity
-        fields = ('date', 'duration', 'distance', 'repetition',)
+        fields = ('date', 'duration', 'distance', 'repetition', 'user')
