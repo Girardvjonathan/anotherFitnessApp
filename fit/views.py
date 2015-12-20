@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import permissions
 
 
 def index(request):
@@ -17,6 +18,11 @@ def index(request):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
+
+class ActivityViewSet(viewsets.ModelViewSet):
+    queryset = Activity.objects.all().order_by('-date')
+    serializer_class = ActivitySerializer
 
 
 class UserList(generics.ListCreateAPIView):
@@ -30,10 +36,15 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ActivityList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class ActivityDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer

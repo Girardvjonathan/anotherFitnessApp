@@ -6,12 +6,15 @@ from fit.models import *
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('url', 'username', 'email', 'weight', 'height',)
+        activities = serializers.PrimaryKeyRelatedField(many=True, queryset=Activity.objects.all())
+        fields = ('url', 'username', 'email', 'weight', 'height',
+                  'activities'
+                  )
 
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source='user_set.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Activity
-        fields = ('date', 'duration', 'distance', 'repetition', 'user')
+        fields = ('date', 'duration', 'distance', 'repetition', 'owner')
