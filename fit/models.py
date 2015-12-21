@@ -37,7 +37,8 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
     weight = models.FloatField(blank=True, null=True)
     height = models.FloatField(blank=True, null=True)
     # Activity = models.ForeignKey(Activity, blank=True, null=True)
-
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     objects = FitUserManager()
 
     USERNAME_FIELD = 'username'
@@ -45,6 +46,9 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.username
+
+    def owner(self):
+        return self
 
     class Meta:
         verbose_name = 'user'
