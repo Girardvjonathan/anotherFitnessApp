@@ -1,0 +1,15 @@
+db:
+  image: postgres
+  ports:
+    - "5434:5432"
+web:
+  build: .
+  volumes:
+    - ../:/code
+    - .:/docker
+  dockerfile: Dockerfile
+  ports:
+    - "80:8000"
+  links:
+    - db
+  hostname: docker

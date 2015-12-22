@@ -90,17 +90,25 @@ WSGI_APPLICATION = 'fitnessTracker.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'fitness',
+#         'USER': 'postgres',
+#         'PASSWORD': '',
+#         'HOST': '104.167.100.64',
+#         'PORT': '8456',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fitness',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': '104.167.100.64',
-        'PORT': '8456',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
-
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Password validation
