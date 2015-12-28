@@ -1,6 +1,7 @@
 from rest_framework import viewsets
-from fit.serializers import UserSerializer, ActivitySerializer
+from fit.serializers import UserSerializer, ActivitySerializer, RunningSerializer
 from django.http import HttpResponse
+from datetime import timedelta
 from fit.models import UserProfile, Activity
 from fit.permissions import IsOwnerOrReadOnly, IsOwner
 from django.http import Http404
@@ -8,6 +9,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
+import time
+from django.db.models import Sum
+from datetime import date
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
@@ -45,13 +49,18 @@ class UserActivity(APIView):
     def get(self, request, format=None):
         user = request.user
         distance_total = 0
-        activity = Activity.objects.filter(owner=user).order_by('-date')
+        activity = Activity.objects.filter(owner=user,
+                                           date__range=(date.today() - timedelta(days=7), date.today()),
+                                           distance__gte=0).extra(
+            {'date': "date(date)", 'duration': "datetime.timedelta(duration)"}).values('date').order_by(
+            'date').annotate(distance=Sum('distance'))\
+            .annotate(duration=Sum('duration'))
         for obj in activity:
-            if obj.distance is not None:
-                distance_total += obj.distance
-        data = ActivitySerializer(activity, many=True).data
+            if obj['distance'] is not None:
+                distance_total += obj['distance']
+        print(activity)
+        data = RunningSerializer(activity, many=True).data
         content = {'activity': data, 'distance_total': distance_total}
-        print(content)
         return Response(content)
 
 

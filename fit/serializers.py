@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from fit.models import *
+from datetime import timedelta
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -9,7 +10,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         # activities = serializers.PrimaryKeyRelatedField(many=True, queryset=Activity.objects.all())
         fields = ('username', 'email', 'weight', 'height',
                   # 'activities',
-                  'weight', 'height',
                   )
 
         def __init__(self, request):
@@ -21,4 +21,13 @@ class ActivitySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Activity
-        fields = ('date', 'duration', 'distance', 'repetition', 'owner')
+        fields = ('date', 'duration', 'distance', 'repetition', 'owner', 'url')
+
+
+class RunningSerializer(serializers.HyperlinkedModelSerializer):
+    distance = serializers.FloatField()
+    duration = serializers.DurationField()
+
+    class Meta:
+        model = Activity
+        fields = ('date', 'duration', 'distance')
