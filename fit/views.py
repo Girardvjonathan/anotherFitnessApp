@@ -53,7 +53,7 @@ class UserActivity(APIView):
                                            date__range=(date.today() - timedelta(days=7), date.today()),
                                            distance__gte=0).extra(
             {'date': "date(date)", 'duration': "datetime.timedelta(duration)"}).values('date').order_by(
-            'date').annotate(distance=Sum('distance'))\
+            'date').annotate(distance=Sum('distance')) \
             .annotate(duration=Sum('duration'))
         for obj in activity:
             if obj['distance'] is not None:

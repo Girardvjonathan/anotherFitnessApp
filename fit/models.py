@@ -9,6 +9,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 # http://www.roguelynn.com/words/django-custom-user-models/
 
 class FitUserManager(BaseUserManager):
+    use_in_migrations = True
+
     def _create_user(self, username, email, password, is_superuser, **extra_fields):
         now = timezone.now()
         email = self.normalize_email(email)
@@ -45,14 +47,14 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.username
-
-    def owner(self):
-        return self
+        return self.username + self.email
 
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    def owner(self):
+        return self
 
 
 class Activity(models.Model):
@@ -62,6 +64,3 @@ class Activity(models.Model):
     distance = models.FloatField(blank=True, null=True)
     repetition = models.IntegerField(blank=True, null=True)
     owner = models.ForeignKey(UserProfile, related_name='activities')
-
-
-
