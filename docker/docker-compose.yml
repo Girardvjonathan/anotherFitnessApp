@@ -9,7 +9,7 @@ another-fitness:
     - .:/docker
   dockerfile: Dockerfile
   ports:
-    - "80:8000"
+    - "8009:8000"
   links:
     - db
   hostname: docker
