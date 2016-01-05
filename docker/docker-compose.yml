@@ -1,7 +1,7 @@
-db:
+db_fit:
   image: postgres
-  ports:
-    - "5434:5432"
+#  ports:
+#    - ":5432"
 another-fitness:
   build: .
   volumes:
@@ -11,5 +11,5 @@ another-fitness:
   ports:
     - "8009:8000"
   links:
-    - db
+    - db_fit
   hostname: docker
