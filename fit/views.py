@@ -52,7 +52,7 @@ class UserActivity(APIView):
         if not request.query_params.get('date'):
             date = datetime.date.today()
         else:
-            date = datetime.datetime.strptime(request.query_params['date'], "%d/%m/%Y").date()
+            date = datetime.datetime.strptime(request.query_params['date'], "%d-%m-%Y").date()
 
         start_week = date - datetime.timedelta(date.weekday())
         end_week = start_week + datetime.timedelta(7)
