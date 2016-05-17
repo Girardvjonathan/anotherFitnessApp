@@ -56,11 +56,3 @@ class UserProfile(PermissionsMixin, AbstractBaseUser):
     def owner(self):
         return self
 
-
-class Activity(models.Model):
-    # type = models.
-    date = models.DateTimeField()
-    duration = models.TimeField()
-    distance = models.FloatField(blank=True, null=True)
-    repetition = models.IntegerField(blank=True, null=True)
-    owner = models.ForeignKey(UserProfile, related_name='activities')

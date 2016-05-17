@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.conf.urls import url
-from fit.views import *
+from activity.views import *
 from rest_framework.urlpatterns import format_suffix_patterns
 
 # router = routers.DefaultRouter()

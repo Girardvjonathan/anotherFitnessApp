@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-from fit.serializers import UserSerializer, ActivitySerializer, RunningSerializer
+from activity.serializers import UserSerializer, ActivitySerializer, RunningSerializer
 from django.http import HttpResponse
 from datetime import timedelta
-from fit.models import UserProfile, Activity
-from fit.permissions import IsOwnerOrReadOnly, IsOwner
+from activity.models import UserProfile, Activity
+from activity.permissions import IsOwnerOrReadOnly, IsOwner
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,7 +15,7 @@ import datetime
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
-from fit.authentification import QuietBasicAuthentication
+from activity.authentification import QuietBasicAuthentication
 
 
 class AuthView(APIView):
