@@ -26,7 +26,6 @@ SECRET_KEY = '51p-k857m0p#0x_7_8(xf(mrixd8zun)zvinh#)!)%j9g)c*e5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = 'fit.UserProfile'
 
 # Application definition
 
@@ -44,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'rest_framework.authtoken',
 ]
+
+AUTH_USER_MODEL = 'userFit.UserProfile'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,7 +84,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 100
 }
 
 WSGI_APPLICATION = 'fitnessTracker.wsgi.application'
@@ -101,13 +102,16 @@ WSGI_APPLICATION = 'fitnessTracker.wsgi.application'
 #         'PORT': '8456',
 #     }
 # }
+DATABASE_USER = os.environ.get("FITNESS_DB_USER", '')
+DATABASE_PASSWORD = os.environ.get("FITNESS_DB_PASSWORD", '')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db_fit',
-        'PORT': '5432',
+        'NAME': 'fitnessTracker',
+        'USER': DATABASE_USER,
+        'PASSWORD' : DATABASE_PASSWORD,
+        'HOST': 'workout.cib1bj0g7xy8.us-east-1.rds.amazonaws.com',
+        'PORT': '4876',
     }
 }
 CORS_ORIGIN_ALLOW_ALL = True

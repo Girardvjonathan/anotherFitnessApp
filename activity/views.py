@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from activity.serializers import UserSerializer, ActivitySerializer, RunningSerializer
+from activity.serializers import ActivitySerializer, RunningSerializer
 from django.http import HttpResponse
 from datetime import timedelta
 from activity.models import UserProfile, Activity
@@ -16,20 +16,6 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from activity.authentification import QuietBasicAuthentication
-
-
-class AuthView(APIView):
-    authentication_classes = (QuietBasicAuthentication,)
-    serializer_class = UserSerializer
-
-    def post(self, request, *args, **kwargs):
-        return Response(self.serializer_class(request.user).data)
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsOwner,)
-    queryset = UserProfile.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
 
 
 class ActivityViewSet(viewsets.ModelViewSet):
@@ -70,16 +56,6 @@ class UserActivity(APIView):
         data = RunningSerializer(activity, many=True).data
         content = {'activity': data, 'distance_total': distance_total}
         return Response(content)
-
-
-class UserList(generics.ListCreateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserSerializer
 
 
 class ActivityList(generics.ListCreateAPIView):
